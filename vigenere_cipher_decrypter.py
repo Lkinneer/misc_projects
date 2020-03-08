@@ -15,8 +15,8 @@ def offset_string(message, offset):
 	answer = ''
 	for i in message:
 		character = i
-		for j in range(ord(offset)-96):
-			character = next_letter(character)
+		for j in range(ord(offset)-97):
+			character = previous_letter(character)
 		answer = answer + character
 	return answer
 '''	
@@ -43,6 +43,13 @@ def increment_letter_probablity(letter_probability):
 		D[next_letter(i)] = letter_probability[i]
 	return D
 
+def previous_letter(character):
+	index = string.ascii_uppercase.find(character)
+	index -= 1
+	if (index < 0):
+		index = 25
+	return string.ascii_uppercase[index]
+	
 def next_letter(character):
 	index = string.ascii_uppercase.find(character)
 	index += 1
