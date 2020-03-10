@@ -2,6 +2,14 @@
 #https://www.geeksforgeeks.org/counting-the-frequencies-in-a-list-using-dictionary-in-python/
 import string
 import math
+import sys
+
+def usage_and_help():
+	if (sys.argv[1] == "--help" or sys.argv[1] == "--usage"):
+		print(sys.argv[0], end='')
+		print(" -f [filename]")
+		print("where filename is the name of the file containing the cyphered text")
+		exit()
 
 def print_max_score(allscores):
 	for i in range(len(allscores)):
@@ -19,17 +27,7 @@ def offset_string(message, offset):
 			character = previous_letter(character)
 		answer = answer + character
 	return answer
-'''	
-def print_max_score(increment_scores):
-	max = 0
-	index = 0
-	for i in increment_scores:
-		if increment_scores[i] > max:
-			max = increment_scores[i]
-			index = i
-	print(max)
-	print(index)
-'''
+
 def score_probability(letter_probability):
 	english_probability = {'A':.0812,'B':.0149,'C':.0271,'D':.0432,'E':.1202,'F':.023,'G':.0203,'H':.0592,'I':.0731,'J':.0010,'K':.0069,'L':.0398,'M':.0261,'N':.0695,'O':.0768,'P':.0182,'Q':.0011,'R':.0602,'S':.0628,'T':.0910,'U':.0288,'V':.0111,'W':.0209,'X':.0017,'Y':.0211,'Z':.0007}
 	score = 0
@@ -115,9 +113,26 @@ def get_cypher_groups(cypher_text, key_length):
 				sumstrings[i] = sumstrings[i]+cypher_text[j]
 	return sumstrings
 
+def decrypt_and_print(sumstrings, key):
+	decoded = []
+	for i in range(len(key)):
+		decoded.append( offset_string(sumstrings[i],key[i]))
+	for i in range(len(decoded[len(decoded)-1])):
+		for j in range(len(decoded)):
+			print (decoded[j][i], end='')
+	print("")
+	
+
 def main():
-	length = 3
+	usage_and_help()
 	cypher_text = "MSKTEBJVWTMABZLFJOUCMYQNOVTEJQGXLRARVZNWHJDTUXEUSECNZMYDXSCNIGARCZODRYZHZNQFXPSROVTLSOZZQZWDXAYBUGWROTOZWOCCTQYDSWZZPRUPWROVTGCSRYMVDWHKGZHHEVOYBBOYBUCQTGEHGICGDZCYKNBGEZUUARCTQQUNSLSSYAVQSJGNUMFHWSGYMYGFWYKXHDWAKUNSGQAEQVRWDXGISTWEPGISPGXSUTJRXZFKCMPJLQQRWFWJCAXJYMPGKBMEQMCJEKHLQCUZTBGDSEUCEWAZGEQAYDCIUWYGMSEOVTWGSXEZHDPRKKXJSJRUCVVFJCAXPRSCHEUCEWMIXTQAYJSGXVVFRTUXBUWDCSKABEPPUJGGGESRRGBMEVGZTVXPOOTBCSDGOTOLGFPEOUGJJWTMBBLPZREWHAEKORTVXJCAJWALPJKTBEQJCARTTWEPEONLGFRUTTLUFHRUWFWQCUZTBGDSQOKXGQTZNMFMYRGEAUGPGUUPJZPSSGZVWDVGQMVLDVGQMVLQCXSMJZZONSQYGNCSKWAUZAKUVYWEGMUTBKPMUAZODFSYKDRJJPUJGPMETUUBYGZGKEWHYZHZUBHJYAKGZBMYRGTLCMEMUAZSWPHUTBUWRFUAVQYZHZGBNCPHNKPBDOCLGTYAXHAXVVFRZUUARXZCZRWBKPYOISBXQHNKAHFOOEYPBWDDRKIFWWCAOARHFZRSMBXQCLSGXFPSYPIPCRSZHIPCNCSKWATPTUXMJWNFGISYGDSEUCETWIKYMIWCMHULLUFHLUWGDZCYKNBGEZUUARCTQQUNSLSSYAVQSJGNUMFHWSGYMYGFWYKXHDWAKUNSGQAEQVRWDXGISTWEPGISPGXSUTJRXZFKCMPJLQQRWFWJCAXJYMPGKBMEQMCJEKHLPJKXGOGOMIABRNPFEHWQQNIZKDRJJPUJGPMESBKZLTZREICGWGSXEJBVJQAZMIWCMHULLWGSXEJBVJQAZNBGEZUUAR"
+	print(cypher_text, end='')
+	usage_and_help()
+	if (sys.argv[1] == "-f"):
+		code_file = open(sys.argv[2],'r')
+		cypher_text = code_file.read()
+	
+	length = 3
 	D = {}
 	for i in range(0, len(cypher_text)-(length-1)):
 		cur = cypher_text[i:i+length]
@@ -158,25 +173,7 @@ def main():
 	while(True):
 		print("please type the key to decrypt the message")
 		key = input()
-		decoded = []
-		for i in range(len(key)):
-			decoded.append( offset_string(sumstrings[i],key[i]))
-		for i in range(len(decoded[len(decoded)-1])):
-			for j in range(len(decoded)):
-				print (decoded[j][i], end='')
-		print("")
+		decrypt_and_print(sumstrings, key)
 
-	'''	
-	for i in sumstrings:
-		letter_count = get_letter_count(sumstrings[i])
-		letter_probability = get_letter_probability(letter_count)
-		increment_scores = {}
-		for increment in range(1,27):
-			#print("NEW PROBABILITY")
-			#print(letter_probability)
-			letter_probability = increment_letter_probablity(letter_probability)
-			increment_scores[increment] = score_probability(letter_probability)
-		print_max_score(increment_scores)
-	'''
 if __name__ == "__main__":
 	main()
