@@ -5,11 +5,12 @@ import math
 import sys
 
 def usage_and_help():
-	if (sys.argv[1] == "--help" or sys.argv[1] == "--usage"):
-		print(sys.argv[0], end='')
-		print(" -f [filename]")
-		print("where filename is the name of the file containing the cyphered text")
-		exit()
+	if (len(sys.argv) > 1):
+		if (sys.argv[1] == "--help" or sys.argv[1] == "--usage"):
+			print(sys.argv[0], end='')
+			print(" -f [filename]")
+			print("where filename is the name of the file containing the cyphered text")
+			exit()
 
 def print_max_score(allscores):
 	for i in range(len(allscores)):
@@ -126,12 +127,14 @@ def decrypt_and_print(sumstrings, key):
 def main():
 	usage_and_help()
 	cypher_text = "MSKTEBJVWTMABZLFJOUCMYQNOVTEJQGXLRARVZNWHJDTUXEUSECNZMYDXSCNIGARCZODRYZHZNQFXPSROVTLSOZZQZWDXAYBUGWROTOZWOCCTQYDSWZZPRUPWROVTGCSRYMVDWHKGZHHEVOYBBOYBUCQTGEHGICGDZCYKNBGEZUUARCTQQUNSLSSYAVQSJGNUMFHWSGYMYGFWYKXHDWAKUNSGQAEQVRWDXGISTWEPGISPGXSUTJRXZFKCMPJLQQRWFWJCAXJYMPGKBMEQMCJEKHLQCUZTBGDSEUCEWAZGEQAYDCIUWYGMSEOVTWGSXEZHDPRKKXJSJRUCVVFJCAXPRSCHEUCEWMIXTQAYJSGXVVFRTUXBUWDCSKABEPPUJGGGESRRGBMEVGZTVXPOOTBCSDGOTOLGFPEOUGJJWTMBBLPZREWHAEKORTVXJCAJWALPJKTBEQJCARTTWEPEONLGFRUTTLUFHRUWFWQCUZTBGDSQOKXGQTZNMFMYRGEAUGPGUUPJZPSSGZVWDVGQMVLDVGQMVLQCXSMJZZONSQYGNCSKWAUZAKUVYWEGMUTBKPMUAZODFSYKDRJJPUJGPMETUUBYGZGKEWHYZHZUBHJYAKGZBMYRGTLCMEMUAZSWPHUTBUWRFUAVQYZHZGBNCPHNKPBDOCLGTYAXHAXVVFRZUUARXZCZRWBKPYOISBXQHNKAHFOOEYPBWDDRKIFWWCAOARHFZRSMBXQCLSGXFPSYPIPCRSZHIPCNCSKWATPTUXMJWNFGISYGDSEUCETWIKYMIWCMHULLUFHLUWGDZCYKNBGEZUUARCTQQUNSLSSYAVQSJGNUMFHWSGYMYGFWYKXHDWAKUNSGQAEQVRWDXGISTWEPGISPGXSUTJRXZFKCMPJLQQRWFWJCAXJYMPGKBMEQMCJEKHLPJKXGOGOMIABRNPFEHWQQNIZKDRJJPUJGPMESBKZLTZREICGWGSXEJBVJQAZMIWCMHULLWGSXEJBVJQAZNBGEZUUAR"
-	print(cypher_text, end='')
 	usage_and_help()
-	if (sys.argv[1] == "-f"):
-		code_file = open(sys.argv[2],'r')
-		cypher_text = code_file.read()
-	
+	if(len(sys.argv) > 1):	
+		if (sys.argv[1] == "-f"):
+			code_file = open(sys.argv[2],'r')
+			cypher_text = code_file.read()
+	cypher_text = cypher_text.strip()
+	print(cypher_text, end='')
+
 	length = 3
 	D = {}
 	for i in range(0, len(cypher_text)-(length-1)):
