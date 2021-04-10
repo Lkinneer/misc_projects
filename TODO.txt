@@ -1,0 +1,3 @@
+Allow the user to go back and choose a new key size
+Handle error where no factors are printed in lorem ipsum text
+allow exit by hitting ctrl + d
