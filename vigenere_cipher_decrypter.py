@@ -1,4 +1,4 @@
-#python 3
+#!/usr/bin/env python3
 #https://www.geeksforgeeks.org/counting-the-frequencies-in-a-list-using-dictionary-in-python/
 import string
 import math
@@ -144,15 +144,12 @@ def main():
       for j in range (0, len(cypher_text)-(length-1)):
         if (cypher_text[j:j+length] == cur):
           D[cur].append(j) #find all indexes that are have the same string and stick them in the dictionary
-  print(D)
-  for i in D:
-    print (len(D[i]))
-  #offsets will contain the list of the number of letters  between all repeats which occur 3 or more times.
+  #offsets will contain the list of the number of letters  between all repeats. 
   offsets = []
   for i in D:
     if len(D[i])>1: #number of repeats that must be present
-      for j in range(0, len(D[i])-1):
-        offsets.append(D[i][j+1]-D[i][j])
+      for x, y in zip(D[i], D[i][1::]):
+        offsets.append(y-x)
 
   #for each number in offsets get the factors of that number and store them in allfactors.
   allfactors = []
